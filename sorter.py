@@ -3,7 +3,7 @@ from encodings import utf_8
 from operator import contains, indexOf
 import os
 import sys
-
+#for mus
 def args():
     # -m (sf-single file / dir-directory) 
     # -i input file
