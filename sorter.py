@@ -1,4 +1,5 @@
 from codecs import utf_8_decode
+import codecs
 from encodings import utf_8
 from operator import contains, indexOf
 import os
@@ -11,17 +12,20 @@ def args():
     # -p pattern
     # -id directory
     # -od output directory
-    if sys.argv[1] == "-m":
-        if sys.argv[2] == "sf":
-            single_file()
-        elif sys.argv[2] == "dir":
-            directory()
-        else:
-            print("Invalid choice")
-            args()
-
+    for arg in sys.argv:
+        if arg == "-h":
+            print("-m (sf-single file / dir-directory) -i input file -o output file -p pattern -id directory -od output directory")
+            sys.exit()
+        if arg == "-m":
+            if sys.argv[indexOf(sys.argv,arg)+1] == "sf":
+                single_file()
+            elif sys.argv[indexOf(sys.argv,arg)+1] == "dir":
+                directory()
+            else:
+                print("Invalid choice")
 
 def main():
+    args()
     print("1. Single file")
     print("2. Directory")
     print("3. Exit")
@@ -88,7 +92,7 @@ def task_start(pattern,file_name):
 
     pattern_start = str(pattern).split("*")[0]
     pattern_end = str(pattern).split("*")[1]
-    with open(file_name) as f:
+    with codecs.open(file_name, 'r', encoding='utf-8',errors='ignore') as f:
         try:
             for line in f:
                 if ":" in line and len(line)>1:
